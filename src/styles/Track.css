@@ -1,0 +1,40 @@
+.track {
+  display: flex;
+  align-items: center;
+  justify-content:left
+}
+
+.track img {
+  max-width: 48px;
+  max-height: 48px;
+}
+
+.track-artist-album {
+  display: flex;
+  flex-direction: column;
+  justify-content:left;
+}
+
+.artist-album {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.track-album,
+.artist {
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: 10px;
+}
+
+.artist {
+  position: relative;
+  font-size: 12px;
+  text-align: left;
+}
+
+.button {
+  margin-left: auto;
+  margin-right: 10px;
+}
