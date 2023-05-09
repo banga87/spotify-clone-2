@@ -1,4 +1,4 @@
-// import Spotify from '../utils/Spotify'
+import Spotify from '../utils/Spotify'
 import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
 import Playlist from './Playlist';
@@ -29,22 +29,22 @@ function App() {
   // SET SEARCH RESULTS
   const search = useCallback( async (searchQuery) => {
     // let data = await Spotify.search(searchQuery);
-  spotifyApi.searchTracks(searchQuery)
-  .then(function(data) {
-    console.log(`Search by ${searchQuery}:`);
-    let results = data.body.tracks.items.map(track => ({
-      id: track.id,
-      name: track.name,
-      artist: track.artists[0].name,
-      album: track.album.name,
-      image: track.album.images[2].url,
-      uri: track.uri
-    }))
-    setSearchResults(results);
-    console.log(searchResults)
-  }, function(err) {
-    console.error(err);
-  });
+    spotifyApi.searchTracks(searchQuery)
+    .then(function(data) {
+      console.log(`Search by ${searchQuery}:`);
+      let results = data.body.tracks.items.map(track => ({
+        id: track.id,
+        name: track.name,
+        artist: track.artists[0].name,
+        album: track.album.name,
+        image: track.album.images[2].url,
+        uri: track.uri
+      }))
+      setSearchResults(results);
+      console.log(searchResults)
+    }, function(err) {
+      console.error(err);
+    });
   }, []);
 
 
@@ -74,13 +74,27 @@ function App() {
 
   // SAVE PLAYLIST
   const savePlaylist = async (playlistName, playlistTracks) => {
+    let playlistId;
+    let trackIds = playlistTracks.map(item => item.uri)
+    console.log(trackIds)
+
+    // Create Playlist
     spotifyApi.createPlaylist(playlistName, { 'description': playlistName, 'public': true })
     .then(function(data) {
-    console.log('Created playlist!');
-    }, function(err) {
-    console.log('Something went wrong!', err);
+      console.log(data)
+      console.log('Playlist ID:', playlistId)
+      console.log('Created playlist!')
+      return data.body.id
+    })
+    .then(function(playlistId) {
+      return spotifyApi.addTracksToPlaylist(playlistId, trackIds)
+    })
+    .then(function(data) {
+      console.log(data)
+    })
+    .then(function(error) {
+      console.log(error);
     });
-    // await Spotify.save(playlistName, playlistTracks)
   }
 
 

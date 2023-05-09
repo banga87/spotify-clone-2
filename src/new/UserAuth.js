@@ -6,8 +6,6 @@ const useUserAuth = (code) => {
   const [refreshToken, setRefreshToken] = useState('')
   const [expiresIn, setExpiresIn] = useState('')
   const [codeProcessed, setCodeProcessed] = useState(false)
-
-  console.log('Code from UserAuth', code)
  
 
   // LOGIN to generate initial accessToken and refreshToken
