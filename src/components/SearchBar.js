@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import "../styles/SearchBar.css"
 
-const SearchBar = (props) => {
+const SearchBar = ({ onSearch }) => {
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -12,7 +12,7 @@ const SearchBar = (props) => {
 
   // Might need to wrap in useCallback()
   const search = () => {
-    props.onSearch(searchQuery);
+    onSearch(searchQuery);
   }
 
 

@@ -1,12 +1,17 @@
-import '../styles/App.css';
-import Spotify from '../utils/Spotify'
-import { useCallback, useEffect, useState } from 'react';
+// import Spotify from '../utils/Spotify'
 import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
 import Playlist from './Playlist';
-import Login from './Login';
-import UserAuth from './UserAuth'
+import '../styles/App.css';
+import { useCallback, useEffect, useState } from 'react';
+import Login from '../new/Login';
+import useUserAuth from '../new/UserAuth'
+import SpotifyWebApi from 'spotify-web-api-node';
 
+
+const spotifyApi = new SpotifyWebApi({
+  clientId: '1a201c080a09493aaa3b437c6f53dbaf'
+})
 
 
 function App() {
@@ -15,19 +20,31 @@ function App() {
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [playlistName, setPlaylistName] = useState("");
   
-  const code = new URLSearchParams(window.location.search).get('code')
-  const accessToken = UserAuth(code)
-
-
-  const initializeSpotifyAuth = () => {
-    Spotify.getAccessToken();
-  };
+  const codeMatch = window.location.href.match(/code=([^&]*)/);
+  let code = codeMatch ? codeMatch[1] : null
+  let { accessToken } = useUserAuth(code);
+  spotifyApi.setAccessToken(accessToken)
 
 
   // SET SEARCH RESULTS
   const search = useCallback( async (searchQuery) => {
-    let data = await Spotify.search(searchQuery);
-    setSearchResults(data);
+    // let data = await Spotify.search(searchQuery);
+  spotifyApi.searchTracks(searchQuery)
+  .then(function(data) {
+    console.log(`Search by ${searchQuery}:`);
+    let results = data.body.tracks.items.map(track => ({
+      id: track.id,
+      name: track.name,
+      artist: track.artists[0].name,
+      album: track.album.name,
+      image: track.album.images[2].url,
+      uri: track.uri
+    }))
+    setSearchResults(results);
+    console.log(searchResults)
+  }, function(err) {
+    console.error(err);
+  });
   }, []);
 
 
@@ -57,13 +74,24 @@ function App() {
 
   // SAVE PLAYLIST
   const savePlaylist = async (playlistName, playlistTracks) => {
-    await Spotify.save(playlistName, playlistTracks)
+    spotifyApi.createPlaylist(playlistName, { 'description': playlistName, 'public': true })
+    .then(function(data) {
+    console.log('Created playlist!');
+    }, function(err) {
+    console.log('Something went wrong!', err);
+    });
+    // await Spotify.save(playlistName, playlistTracks)
   }
 
 
+  // useEffect(() => {
+  //   if(!code) return;
+  //   if(accessToken) {
+  //     Spotify.setAccessToken(accessToken);
+  //   }}, [code]);
 
 
-  return code ?  (
+  return accessToken ?  (
     <div className="App">
       <h1>Spotify-Clone</h1>
       <SearchBar onSearch={search}/>
