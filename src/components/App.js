@@ -3,7 +3,7 @@ import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
 import Playlist from './Playlist';
 import '../styles/App.css';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Login from './Login';
 import useUserAuth from './UserAuth'
 
@@ -20,6 +20,7 @@ function App() {
   let { accessToken } = useUserAuth(code);
 
 
+  // SET ACCESS TOKEN
   useEffect(() => {
     if (accessToken) {
       Spotify.setAccessToken(accessToken)
@@ -33,8 +34,11 @@ function App() {
     setSearchResults(results)
   }
 
+
+  // CLEAR SEARCH RESULTS
   const clearSearchResults = () => {
     setSearchResults([])
+    setPlaylistName('')
   }
 
   
@@ -66,13 +70,6 @@ function App() {
   const changePlaylistName = (name) => {
     setPlaylistName(name)
   }
-
-
-  // useEffect(() => {
-  //   if(!code) return;
-  //   if(accessToken) {
-  //     Spotify.setAccessToken(accessToken);
-  //   }}, [code]);
 
 
   return accessToken ?  (

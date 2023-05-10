@@ -15,7 +15,7 @@ const Track = ({ track, onAddTrack, onRemoveTrack, isInSearchResults }) => {
   
   return (
     <div className='track'>
-      <img src={track.image} />
+      <img src={track.image} alt='' />
       <div className='track-artist-album'>
         <p className='track-album'>{track.name} - {track.album}</p>
         <p className='artist'>{track.artist}</p>

@@ -46,8 +46,10 @@ const savePlaylist = async (playlistName, playlistTracks) => {
   });
 }
 
-export default {
+const spotify = {
   setAccessToken,
   searchTracks,
   savePlaylist,
 };
+
+export default spotify

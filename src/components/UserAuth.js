@@ -31,7 +31,7 @@ const useUserAuth = (code) => {
     };
 
     fetchData();
-  }, [code]);
+  }, [code, codeProcessed]);
   
 
   // REFRESH to generate new accessToken when current expires
