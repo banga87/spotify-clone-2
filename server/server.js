@@ -8,18 +8,18 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const redirectUri = process.env.REDIRECT_URI;
-const clientId = process.env.CLIENT_ID;
-const clientSecret =  process.env.CLIENT_SECRET;
+const redirectUri = process.env.REACT_APP_REDIRECT_URI;
+const clientId = process.env.REACT_APP_CLIENT_ID;
+const clientSecret =  process.env.REACT_APP_CLIENT_SECRET;
 
 // REFRESH ENDPOINT
 app.post('/refresh', (request, response) => {
   const refreshToken = request.body.refreshToken;
   console.log('REFRESH:', refreshToken)
   const spotifyApi = new SpotifyWebApi({
-    redirectUri : process.env.REDIRECT_URI,
-    clientId : process.env.CLIENT_ID,
-    clientSecret :  process.env.CLIENT_SECRET,
+    redirectUri : process.env.REACT_APP_REDIRECT_URI,
+    clientId : process.env.REACT_APP_CLIENT_ID,
+    clientSecret :  process.env.REACT_APP_CLIENT_SECRET,
     refreshToken,
   })
   
@@ -44,9 +44,9 @@ app.post('/login', (request, response) => {
   const code = request.body.code
   console.log('Login endpoint called with code:', code)
   const spotifyApi = new SpotifyWebApi({ 
-    redirectUri : process.env.REDIRECT_URI,
-    clientId : process.env.CLIENT_ID,
-    clientSecret :  process.env.CLIENT_SECRET,
+    redirectUri : process.env.REACT_APP_REDIRECT_URI,
+    clientId : process.env.REACT_APP_CLIENT_ID,
+    clientSecret :  process.env.REACT_APP_CLIENT_SECRET,
   })
 
   spotifyApi
