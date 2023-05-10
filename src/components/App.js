@@ -33,6 +33,10 @@ function App() {
     setSearchResults(results)
   }
 
+  const clearSearchResults = () => {
+    setSearchResults([])
+  }
+
   
   // ADD TRACK TO PLAYLIST
   const addTrack = (track) => {
@@ -74,7 +78,10 @@ function App() {
   return accessToken ?  (
     <div className="App">
       <h1>Spotify-Clone</h1>
-      <SearchBar onSearch={search}/>
+      <SearchBar
+        onSearch={search}
+        onClearSearchResults={clearSearchResults}  
+      />
       <SearchResults
         searchResults={searchResults}
         onAddTrack={addTrack}  

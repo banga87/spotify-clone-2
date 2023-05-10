@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import "../styles/SearchBar.css"
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({ onSearch, onClearSearchResults }) => {
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -15,11 +15,17 @@ const SearchBar = ({ onSearch }) => {
     onSearch(searchQuery);
   }
 
+  const clear = () => {
+    onClearSearchResults()
+  }
+
 
   return (
     <div className='search-bar'>
       <input className='search-input' placeholder='Search for tunes' onChange={handleSearchQueryChange}></input>
       <button className='search-button' onClick={search}>SEARCH</button>
+      <button className='clear-button' onClick={clear}>CLEAR</button>
+
     </div>
   )
 }
