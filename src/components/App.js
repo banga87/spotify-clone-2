@@ -17,7 +17,7 @@ function App() {
   
   const codeMatch = window.location.href.match(/code=([^&]*)/);
   let code = codeMatch ? codeMatch[1] : null
-  let { accessToken } = useUserAuth(code);
+  let { accessToken } = useUserAuth(code, []);
 
 
   // SET ACCESS TOKEN
