@@ -14,7 +14,7 @@ const useUserAuth = (code) => {
 
     const fetchData = async () => {
       try {
-        const response = await axios.post('https://git.heroku.com/angus-spotify-clone.git/login', { code })
+        const response = await axios.post('https://angus-spotify-clone.herokuapp.com/login', { code })
         // const response = await axios.post('http://localhost:3001/login', { code })
           console.log('login data:', response.data);
           setAccessToken(response.data.accessToken);
@@ -42,7 +42,7 @@ const useUserAuth = (code) => {
   
     const fetchRefreshedToken = async () => {
       try {
-        const response = await axios.post('https://git.heroku.com/angus-spotify-clone.git/refresh', {
+        const response = await axios.post('https://angus-spotify-clone.herokuapp.com/refresh', {
         // const response = await axios.post('http://localhost:3001/refresh', {
           refreshToken,
         });
