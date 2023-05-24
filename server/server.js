@@ -5,7 +5,13 @@ const bodyParser = require("body-parser")
 const SpotifyWebApi = require('spotify-web-api-node');
 
 const app = express();
-app.use(cors());
+
+var corsOptions = {
+  origin: ['https://angus-spotify-clone.netlify.app', 'http://localhost:3000'],
+  optionsSuccessStatus: 200, // For legacy browser support
+}
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 const redirectUri = process.env.REACT_APP_REDIRECT_URI;
