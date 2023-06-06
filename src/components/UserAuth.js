@@ -20,8 +20,9 @@ const useUserAuth = (code) => {
           setAccessToken(response.data.accessToken);
           setRefreshToken(response.data.refreshToken);
           setExpiresIn(response.data.expiresIn);
-          window.history.replaceState({}, null, '/')
+          // window.history.replaceState({}, null, '/')
           setCodeProcessed(true);
+          window.history.replaceState({}, null, '/')
           console.log('Access Token in User Auth:', response.data.accessToken);
           console.log('Refresh token in UserAuth', response.data.refreshToken);
           console.log('Expires In in User Auth:', response.data.expiresIn);

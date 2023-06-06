@@ -14,10 +14,14 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [playlistName, setPlaylistName] = useState("");
+
+  const code = new URLSearchParams(window.location.search).get('code');
+  let { accessToken } = useUserAuth(code);
+
   
-  const codeMatch = window.location.href.match(/code=([^&]*)/);
-  let code = codeMatch ? codeMatch[1] : null
-  let { accessToken } = useUserAuth(code, []);
+  // const codeMatch = window.location.href.match(/code=([^&]*)/);
+  // let code = codeMatch ? codeMatch[1] : null
+  // let { accessToken } = useUserAuth(code, []);
 
 
   // SET ACCESS TOKEN
