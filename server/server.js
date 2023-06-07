@@ -59,10 +59,10 @@ app.post('/login', (request, response) => {
   spotifyApi
     .authorizationCodeGrant(code)
     .then((data) => {
-      // console.log('The token expires in: ' + data.body['expires_in'])
-      // console.log('The access token is: ' + data.body['access_token']);
-      // console.log('The refresh token is: ' + data.body['refresh_token']);
-      // console.log('The authorization code is:', code)
+      console.log('The token expires in: ' + data.body['expires_in'])
+      console.log('The access token is: ' + data.body['access_token']);
+      console.log('The refresh token is: ' + data.body['refresh_token']);
+      console.log('The authorization code is:', code)
       
       spotifyApi.setAccessToken(data.body['access_token']);
       spotifyApi.setRefreshToken(data.body['refresh_token']);
@@ -76,6 +76,8 @@ app.post('/login', (request, response) => {
     })
     .catch((error) => {
       console.log(error)
+      console.log(error.message)
+      console.log(error.stack)
       response.sendStatus(400)
     })
 });
